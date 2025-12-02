@@ -72,7 +72,7 @@ export default function HeroBanners(): React.ReactElement {
     },
     {
       titleTop: "Ремонтируем кондиционеры",
-      titleBottom: "в Чебоксарах или возвращаем деньги по договору",
+      titleBottom: "в Ташкенте или возвращаем деньги по договору",
       bullet1Top: "Мы не просто мастерская,",
       bullet1Bottom: "мы компания - изобретатель",
       bullet2Top: "Разрабатываем и ремонтируем",

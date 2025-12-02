@@ -33,7 +33,8 @@ export default function Believe(): React.ReactElement {
   return (
     <section
       className={
-        "w-full bg-[#FFFFFF] py-14 px-[101px] " +
+        // добавил overflow-x-hidden, остальное — как было
+        "w-full bg-[#FFFFFF] py-14 px-[101px] overflow-x-hidden " +
         "max-[1024px]:px-8 max-[820px]:px-6 max-[650px]:px-4 max-[480px]:px-3 max-[650px]:pb-[0px]"
       }
     >
@@ -43,8 +44,8 @@ export default function Believe(): React.ReactElement {
           <div className="flex items-end justify-between gap-6">
             <h2
               className={
-                "text-5xl font-extrabold text-[#0B0B0B] leading-tight text-center" +
-                "max-[1024px]:text-4xl max-[820px]:text-3xl max-[650px]:text-[22px] max-[650px]:text-center w-full text-center"
+                "text-5xl font-extrabold text-[#0B0B0B] leading-tight text-center " +
+                "max-[1024px]:text-4xl max-[820px]:text-3xl max-[650px]:text-[22px] max-[650px]:text-center w-full"
               }
             >
               Мы ремонтируем и обслуживаем
@@ -60,7 +61,8 @@ export default function Believe(): React.ReactElement {
         <div
           className={
             "mx-auto grid gap-6 items-center justify-center " +
-            "grid-cols-5 max-[1200px]:grid-cols-4 max-[1024px]:grid-cols-4 max-[820px]:grid-cols-3 max-[480px]:grid-cols-2 max-[360px]:grid-cols-1"
+            // 5 / 4 / 3 / 2 (<=650) columns — ниже 650px будет строго 2 в ряд
+            "grid-cols-5 max-[1200px]:grid-cols-4 max-[1024px]:grid-cols-4 max-[820px]:grid-cols-3 max-[650px]:grid-cols-2 max-[480px]:grid-cols-2"
           }
           style={{ alignItems: "center" }}
         >
@@ -72,26 +74,21 @@ export default function Believe(): React.ReactElement {
                 "hover:scale-[1.03] hover:shadow-lg border border-transparent bg-white/0"
               }
               style={{
-                // Увеличил размеры карточек и внутренние паддинги
-                minWidth: 160,
-                minHeight: 96,
-                padding: "14px 18px",
+                // делаем карточки полностью адаптивными — ширина 100% ячейки, padding учитывает boxSizing
+                width: "100%",
+                boxSizing: "border-box",
+                minHeight: 88,
+                padding: "10px 12px",
               }}
             >
               <img
                 src={src}
                 alt={`logo-${i}`}
                 draggable={false}
-                style={{ userSelect: "none" }}
+                style={{ userSelect: "none", maxWidth: "100%", maxHeight: "64px", width: "auto", height: "auto" }}
                 className={
-                  // Увеличил высоту логотипов по брейкпоинтам
-                  "h-[56px] max-w-full object-contain " +
-                  "max-[1200px]:h-[52px] " +
-                  "max-[1024px]:h-[50px] " +
-                  "max-[820px]:h-[48px] " +
-                  "max-[650px]:h-[44px] " +
-                  "max-[480px]:h-[40px] " +
-                  "max-[360px]:h-[36px]"
+                  // убрал жесткие h-[...] классы, оставил адаптивное поведение через inline-стили выше
+                  "object-contain"
                 }
               />
             </div>

@@ -18,18 +18,16 @@ const Images: ImgItem[] = [
 ];
 
 export default function Header(): React.ReactElement {
-  // Синхронизируем breakpoint с Tailwind: <=768px
-  const [mobile, setMobile] = useState<boolean>(() =>
-    typeof window !== "undefined" ? window.innerWidth <= 768 : false
-  );
+  // start with a stable server-friendly value (false) to avoid hydration mismatch
+  const [mobile, setMobile] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    // set actual value on client after mount
     function check() {
       const isMobile = window.innerWidth <= 768;
       setMobile(isMobile);
-      // если пользователь расширил экран — закрываем мобильное меню
-      if (!isMobile) setOpen(false);
+      if (!isMobile) setOpen(false); // close mobile menu when switching to desktop
     }
     check();
     window.addEventListener("resize", check);

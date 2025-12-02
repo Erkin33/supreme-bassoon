@@ -59,18 +59,19 @@ export default function Footer(): React.ReactElement {
     alert("Отправлено: " + formatPhoneUZ(digits));
   }
 
-  // ------------ YANDEX MAP ------------
+  // ------------ YANDEX MAP (Ташкент, Яшнабадский район) ------------
   useEffect(() => {
     const initMap = () => {
       const w = window as any;
       if (!w.ymaps || !mapRef.current) return;
 
       try {
+        // Координаты поставлены на центр Ташкента (Яшнабадский район можно уточнить)
         const map = new w.ymaps.Map(
           mapRef.current,
           {
-            center: [56.1466, 47.2515],
-            zoom: 15,
+            center: [41.2995, 69.2401],
+            zoom: 13,
             controls: []
           },
           { suppressMapOpenBlock: true }
@@ -79,10 +80,10 @@ export default function Footer(): React.ReactElement {
         map.behaviors.disable("scrollZoom");
 
         const placemark = new w.ymaps.Placemark(
-          [56.1466, 47.2515],
+          [41.2995, 69.2401],
           {
-            hintContent: "NTK Прибор",
-            balloonContent: "г. Чебоксары, Волжский 3, Приволжский бульвар 4к1"
+            hintContent: "NTK Прибор — Ташкент",
+            balloonContent: "г. Ташкент, Яшнабадский район"
           },
           {
             iconLayout: "default#image",
@@ -161,7 +162,7 @@ export default function Footer(): React.ReactElement {
             <p className="mb-[20px] font-bold text-lg max-[650px]:text-base">Будем рады видеть Вас в нашем офисе:</p>
 
             <p className="mb-[20px] max-[650px]:mx-auto">
-              г. Чебоксары, мкр Волжский 3, Приволжский бульвар 4к1, помещение 7
+              г. Ташкент, Яшнабадский район
               <br />
               ПН - ПТ с 08:00 до 17:00
             </p>
@@ -211,7 +212,7 @@ export default function Footer(): React.ReactElement {
           />
           <div className="absolute left-[8%] top-[6%] bg-white/95 rounded-md px-3 py-2 text-sm shadow-md flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#374151] rounded-full" />
-            <div className="font-semibold text-sm">Приборэнерго</div>
+            <div className="font-semibold text-sm">NTK Прибор — Ташкент</div>
             <div className="text-xs text-gray-500 ml-2">пн–пт 08:00–17:00</div>
           </div>
         </div>
