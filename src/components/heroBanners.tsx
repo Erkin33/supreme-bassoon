@@ -95,14 +95,14 @@ export default function HeroBanners(): React.ReactElement {
         >
           <nav className="w-full mx-auto flex" aria-label="services tabs">
             {/* Desktop: 3 equal tabs. Mobile: fixed-size buttons that scroll horizontally */}
-            <div className="w-full flex">
+            <div className="w-full flex max-[420px]:justify-between">
               {tabs.map((t, i) => (
                 <button
                   key={t}
                   onClick={() => setActiveIndex(i)}
                   className={`flex-1 h-[65px] flex items-center justify-center text-sm font-semibold uppercase transition
                               ${i === activeIndex ? "bg-[#02A653] text-white shadow-md" : "text-black hover:bg-[#02A653] hover:text-white"}
-                              max-[768px]:flex-none max-[768px]:h-[44px] max-[768px]:px-3 max-[768px]:mr-2`}
+                              max-[768px]:flex-none max-[768px]:h-[44px] max-[768px]:px-3 max-[768px]:mr-2 max-[420px]:mr-[0px] max-[420px]:pr-[2px] max-[420px]:pl-[2px] max-[350px]:text-[10px]`}
                   aria-current={i === activeIndex ? "page" : undefined}
                   type="button"
                 >

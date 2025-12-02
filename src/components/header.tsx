@@ -18,15 +18,15 @@ const Images: ImgItem[] = [
 ];
 
 export default function Header(): React.ReactElement {
-  // Синхронизируем breakpoint с Tailwind: <=650px
+  // Синхронизируем breakpoint с Tailwind: <=768px
   const [mobile, setMobile] = useState<boolean>(() =>
-    typeof window !== "undefined" ? window.innerWidth <= 650 : false
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
   );
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     function check() {
-      const isMobile = window.innerWidth <= 650;
+      const isMobile = window.innerWidth <= 768;
       setMobile(isMobile);
       // если пользователь расширил экран — закрываем мобильное меню
       if (!isMobile) setOpen(false);
@@ -63,8 +63,8 @@ export default function Header(): React.ReactElement {
               </a>
             </div>
 
-            {/* NAV (desktop only) — скрываются строго при <=650px */}
-            <div className="w-[523px] h-[27px] flex justify-between items-center max-[650px]:hidden">
+            {/* NAV (desktop only) — скрываются при <=768px */}
+            <div className="w-[523px] h-[27px] flex justify-between items-center max-[768px]:hidden">
               {links.map((link, idx) => (
                 <a key={idx} href={link.href} onClick={(e) => go(e, link.href)} className="text-lg font-bold">
                   {link.linkName}
@@ -78,24 +78,24 @@ export default function Header(): React.ReactElement {
               style={mobile ? { transform: "scale(0.92)", transformOrigin: "right" } : {}}
             >
               {/* working hours (hidden on mobile) */}
-              <p className="w-[216px] h-[26px] font-bold text-sm flex justify-center items-start mb-[2px] leading-[130%] max-[650px]:hidden">
+              <p className="w-[216px] h-[26px] font-bold text-sm flex justify-center items-start mb-[2px] leading-[130%] max-[768px]:hidden">
                 Работаем с 08:00 до 17:00
               </p>
 
               {/* phone button — показан на десктоп, а на mobile прячем сам текст (оставляем телефон в мобильном меню) */}
               <div className="w-[216px] h-[49px] flex items-center bg-[#02A653] rounded-[24.5px] max-[768px]:hidden">
                 <img src="/Header/ph.svg" alt="phone" width={24} height={25} className="ml-[16px]" />
-                {/* Скрываем текст телефона на <=650px */}
+                {/* Скрываем текст телефона на <=768px */}
                 <a
                   href="tel:+79278435144"
-                  className="text-lg flex tracking-[2%] w-[152px] ml-[10px] font-bold text-white mr-[14px] max-[650px]:hidden"
+                  className="text-lg flex tracking-[2%] w-[152px] ml-[10px] font-bold text-white mr-[14px] max-[768px]:hidden"
                 >
                   +7 927 843 51 44
                 </a>
               </div>
 
               {/* socials (desktop only) */}
-              <div className="w-[151px] h-[34.4px] flex justify-between items-center mx-auto mt-[9px] max-[650px]:hidden">
+              <div className="w-[151px] h-[34.4px] flex justify-between items-center mx-auto mt-[9px] max-[768px]:hidden">
                 {Images.map((imagesHere, index) => (
                   <a key={index} href={imagesHere.href} aria-label={`social-${index}`}>
                     <img src={imagesHere.src} alt={`icon-${index}`} style={{ width: imagesHere.width, height: imagesHere.height }} />
@@ -103,13 +103,12 @@ export default function Header(): React.ReactElement {
                 ))}
               </div>
 
-              {/* BURGER: показываем только на мобильных (<=650px) */}
+              {/* BURGER: показываем на мобильных (<=768px) */}
               <div className="mt-2">
                 <button
                   onClick={() => setOpen((v) => !v)}
                   aria-label={open ? "Закрыть меню" : "Открыть меню"}
-                  // оставляем твой классutton; он видим только при max-[650px]
-                  className="hidden max-[650px]:inline-flex items-center justify-center p-2 rounded-md bg-transparent border-0 cursor-pointer"
+                  className="hidden max-[768px]:inline-flex items-center justify-center p-2 rounded-md bg-transparent border-0 cursor-pointer"
                 >
                   {!open ? (
                     <svg width={28} height={28} viewBox="0 0 24 24" aria-hidden>
