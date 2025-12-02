@@ -3,9 +3,9 @@ import React, { useState } from "react";
 
 export default function HeroBanners(): React.ReactElement {
   const tabs = ["Электрика", "Сантехника", "Кондиционер"];
-  const [activeIndex, setActiveIndex] = useState<number>(2); // по умолчанию Кондиционер
+  const [activeIndex, setActiveIndex] = useState<number>(2);
 
-  const [digits, setDigits] = useState<string>(""); // максимум 9 цифр
+  const [digits, setDigits] = useState<string>("");
   const isValid = digits.length === 9;
 
   function formatPhone(digs: string): string {
@@ -53,9 +53,7 @@ export default function HeroBanners(): React.ReactElement {
 
   const phonePlaceholder = "+998 __ ___ __ __";
 
-  // texts per service
   const heroTexts = [
-    // 0: Электрика
     {
       titleTop: "Проводим ремонт и диагностику",
       titleBottom: "устраняем неисправности",
@@ -64,7 +62,6 @@ export default function HeroBanners(): React.ReactElement {
       bullet2Top: "Проводим сложные работы и диагностику",
       bullet2Bottom: "без лишних накруток"
     },
-    // 1: Сантехника
     {
       titleTop: "Устраняем протечки, засоры,",
       titleBottom: "проводим ремонт и замену оборудования",
@@ -73,7 +70,6 @@ export default function HeroBanners(): React.ReactElement {
       bullet2Top: "Работаем аккуратно и чисто",
       bullet2Bottom: "с полным соблюдением технологий"
     },
-    // 2: Кондиционер
     {
       titleTop: "Ремонтируем кондиционеры",
       titleBottom: "в Чебоксарах или возвращаем деньги по договору",
@@ -85,112 +81,127 @@ export default function HeroBanners(): React.ReactElement {
   ];
 
   const activeTexts = heroTexts[activeIndex];
-
   const rightImageSrc =
     activeIndex === 0 ? "/Header/Elektrik.png" : activeIndex === 1 ? "/Header/Santexnik.png" : "/Header/Air.png";
 
   return (
-    <div id="company" className="w-full h-auto flex flex-col">
-      {/* верхнее меню (цвет/тень оставил как раньше) */}
-      <div
-        className="w-[1139px] h-[65px] flex items-center"
-        style={{ background: "#F6F6F6", boxShadow: "0 4px 20px rgba(0,0,0,0.04)" }}
-      >
-        <nav className="flex w-full h-full">
-          {tabs.map((t, i) => (
-            <a
-              key={t}
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveIndex(i);
-              }}
-              aria-current={i === activeIndex ? "page" : undefined}
-              className={`h-full flex items-center justify-center whitespace-nowrap text-sm font-semibold uppercase transition-all duration-150
-                ${i === activeIndex ? "bg-[#02A653] text-white shadow-md" : "text-black hover:bg-[#02A653] hover:text-white hover:shadow-md"}`}
-              style={{ flex: 1, lineHeight: "100%", letterSpacing: "-0.06em" }}
-            >
-              {t}
-            </a>
-          ))}
-        </nav>
-      </div>
-
-      {/* основной блок */}
-      <div className="w-full h-[706px] flex justify-between items-start relative">
-        {/* === ЛЕВЫЙ КОНТЕЙНЕР С ГРАДИЕНТОМ СЛЕВА→ПРАВА === */}
+    <section id="company" className="w-full flex justify-center">
+      {/* Outer fixed-width wrapper (keeps everything aligned) */}
+      <div className="w-full max-w-[1140px] px-4 box-border">
+        {/* TABS: fixed height, fixed placement */}
         <div
-          className="w-[886px] h-[672px] flex flex-col py-[110px] px-[51px] z-[3]"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.92) 61%, rgba(255,255,255,0.58) 82%, rgba(255,255,255,0) 100%)"
-          }}
+          className="w-full h-[65px] bg-[#F6F6F6] shadow-[0_4px_20px_rgba(0,0,0,0.04)] flex items-center
+                     max-[768px]:h-[56px] max-[768px]:px-2"
         >
-          <h1 className="text-[45px] leading-[120%] tracking-[-3%] w-[787px] h-[173px] mb-[32px]">
-            <span className="font-extrabold">{activeTexts.titleTop}</span>
-            <br />
-            <span className="font-extrabold not-italic" style={{ fontWeight: 700 }}>
-              {activeTexts.titleBottom}
-            </span>
-          </h1>
-
-          <div className="w-auto h-auto flex gap-x-[47px] mb-[46px]">
-            <div className="w-[314px] h-[54px] flex gap-x-[10px]">
-              <img src="/Header/Tick.svg" alt="tick" className="w-[44px] h-[44px]" />
-              <p className="text-[18px]">
-                {activeTexts.bullet1Top}
-                <br />
-                <span className="font-bold">{activeTexts.bullet1Bottom}</span>
-              </p>
+          <nav className="w-full mx-auto flex" aria-label="services tabs">
+            {/* Desktop: 3 equal tabs. Mobile: fixed-size buttons that scroll horizontally */}
+            <div className="w-full flex">
+              {tabs.map((t, i) => (
+                <button
+                  key={t}
+                  onClick={() => setActiveIndex(i)}
+                  className={`flex-1 h-[65px] flex items-center justify-center text-sm font-semibold uppercase transition
+                              ${i === activeIndex ? "bg-[#02A653] text-white shadow-md" : "text-black hover:bg-[#02A653] hover:text-white"}
+                              max-[768px]:flex-none max-[768px]:h-[44px] max-[768px]:px-3 max-[768px]:mr-2`}
+                  aria-current={i === activeIndex ? "page" : undefined}
+                  type="button"
+                >
+                  {t}
+                </button>
+              ))}
             </div>
-
-            <div className="w-[351px] h-[54px] flex gap-x-[10px]">
-              <img src="/Header/Tick.svg" alt="tick" className="w-[44px] h-[44px]" />
-              <p className="text-[18px] ">
-                {activeTexts.bullet2Top}
-                <br /> <span className="font-bold">{activeTexts.bullet2Bottom}</span>
-              </p>
-            </div>
-          </div>
-
-          {/* ВНУТРЕННИЙ СВЕТЛЫЙ БЛОК */}
-          <div className="w-[625px] h-[147px] bg-[#ECECEC] flex flex-col gap-y-[14px] rounded-[15px] pt-[17px] pr-[18px] pl-[24px] pb-[30px]">
-            <p className="text-xl mx-auto">Реанимируем технику даже удаленно!</p>
-
-            <div className="w-full flex items-center justify-center gap-x-[16px]">
-              <input
-                type="tel"
-                inputMode="tel"
-                value={digits.length ? formatPhone(digits) : ""}
-                onChange={handleChange}
-                onPaste={handlePaste}
-                onKeyDown={handleKeyDown}
-                placeholder={phonePlaceholder}
-                className="w-[294px] h-[58px] rounded-[39px] pl-[29px] text-base text-[18px] placeholder-[#999999] bg-white border border-gray-200 outline-none
-                           focus:ring-2 focus:ring-[#02A653] focus:border-transparent"
-                aria-label="Номер телефона"
-              />
-
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isValid}
-                className={`w-[273px] h-[58px] rounded-[39px] bg-gradient-to-b from-[#05a859] to-[#02A653] text-white font-bold flex flex-col items-center justify-center shadow-lg
-                           hover:opacity-95 transition ${!isValid ? "opacity-60 cursor-not-allowed" : ""}`}
-                style={{ boxShadow: "0 8px 20px rgba(2,166,83,0.25)" }}
-              >
-                <span className="text-sm uppercase font-normal">Записаться на</span>
-                <span className="text-sm uppercase leading-none">бесплатную диагностику</span>
-              </button>
-            </div>
-          </div>
+          </nav>
         </div>
 
-        {/* правая картинка — прижата к правому краю, меняется по activeIndex */}
-        <div className="absolute right-0 top-0 w-[654px] h-[656px] pointer-events-none">
-          <img src={rightImageSrc} alt="side visual" className="w-full h-full object-cover" />
+        {/* HERO GRID: two columns fixed on desktop; one column fixed layout on mobile */}
+        <div className="mt-6 grid grid-cols-2 gap-6 relative
+                        max-[768px]:grid-cols-1 max-[768px]:gap-4">
+          {/* LEFT: fixed size container on desktop, full width on mobile */}
+          <div
+            className="col-span-1 w-[886px] h-[672px] bg-[linear-gradient(90deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.92)_61%,rgba(255,255,255,0.58)_82%,rgba(255,255,255,0)_100%)]
+                       px-[51px] py-[110px] z-10
+                       max-[768px]:w-full max-[768px]:h-auto max-[768px]:px-6 max-[768px]:py-6"
+          >
+            {/* Title with fixed block width so it doesn't reflow */}
+            <h1 className="text-[45px] leading-[120%] tracking-[-3%] w-[787px] h-[173px] mb-[32px]
+                           max-[768px]:w-full max-[768px]:h-auto max-[768px]:text-2xl max-[768px]:mb-4">
+              <span className="font-extrabold">{activeTexts.titleTop}</span>
+              <br />
+              <span className="font-extrabold" style={{ fontWeight: 700 }}>
+                {activeTexts.titleBottom}
+              </span>
+            </h1>
+
+            {/* Bullets — fixed boxes so they keep shape */}
+            <div className="flex gap-x-[47px] mb-[46px] max-[768px]:flex-col max-[768px]:gap-y-3">
+              <div className="w-[314px] min-h-[54px] flex gap-x-[10px] items-start max-[768px]:w-full">
+                <img src="/Header/Tick.svg" alt="tick" className="w-[44px] h-[44px]" />
+                <p className="text-[18px] leading-tight">
+                  {activeTexts.bullet1Top}
+                  <br />
+                  <span className="font-bold">{activeTexts.bullet1Bottom}</span>
+                </p>
+              </div>
+
+              <div className="w-[351px] min-h-[54px] flex gap-x-[10px] items-start max-[768px]:w-full">
+                <img src="/Header/Tick.svg" alt="tick" className="w-[44px] h-[44px]" />
+                <p className="text-[18px] leading-tight">
+                  {activeTexts.bullet2Top}
+                  <br />
+                  <span className="font-bold">{activeTexts.bullet2Bottom}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Light box (fixed size on desktop, full width mobile) */}
+            <div className="w-[625px] h-[147px] bg-[#ECECEC] rounded-[15px] flex flex-col gap-y-[14px] p-[17px_18px_30px_24px]
+                            max-[768px]:w-full max-[768px]:h-auto max-[768px]:p-4">
+              <p className="text-xl text-center max-[768px]:text-base">Реанимируем технику даже удаленно!</p>
+
+              <div className="flex items-center justify-center gap-x-[16px] max-[768px]:flex-col">
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  value={digits.length ? formatPhone(digits) : ""}
+                  onChange={handleChange}
+                  onPaste={handlePaste}
+                  onKeyDown={handleKeyDown}
+                  placeholder={phonePlaceholder}
+                  className="w-[294px] h-[58px] rounded-[39px] pl-[29px] text-[18px] placeholder-[#999999] bg-white border border-gray-200 outline-none
+                             focus:ring-2 focus:ring-[#02A653] focus:border-transparent
+                             max-[768px]:w-full max-[768px]:h-12 max-[768px]:pl-4 max-[768px]:rounded-lg max-[768px]:mb-[20px]"
+                  aria-label="Номер телефона"
+                />
+
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!isValid}
+                  className={`w-[273px] h-[58px] rounded-[39px] bg-gradient-to-b from-[#05a859] to-[#02A653] text-white font-bold flex flex-col items-center justify-center shadow-lg
+                             hover:opacity-95 transition ${!isValid ? "opacity-60 cursor-not-allowed" : ""}
+                             max-[768px]:w-full max-[768px]:h-12 max-[768px]:rounded-lg`}
+                  style={{ boxShadow: "0 8px 20px rgba(2,166,83,0.25)" }}
+                >
+                  <span className="text-sm uppercase leading-none">Записаться на</span>
+                  <span className="text-sm uppercase leading-none">бесплатную диагностику</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: fixed visual box on desktop (absolute via grid area), on mobile placed below with fixed width */}
+          <div className="col-span-1 flex items-start justify-end">
+            <div className="relative w-[654px] h-[656px] pointer-events-none
+                            max-[768px]:w-full max-[768px]:h-auto max-[768px]:pointer-events-auto max-[768px]:flex max-[768px]:justify-center">
+              <img
+                src={rightImageSrc}
+                alt="side visual"
+                className="w-full h-full object-cover max-[768px]:w-[360px] max-[768px]:h-auto max-[768px]:object-cover max-[768px]:relative max-[768px]:top-[-39px]"
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

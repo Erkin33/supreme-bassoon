@@ -30,71 +30,93 @@ const logos = [
 ];
 
 export default function Believe(): React.ReactElement {
-  // карточка одного логотипа — фиксированные размеры
-  const cardW = 140; // px
-  const cardH = 80; // px
-
   return (
-    <section className="w-full h-auto bg-[#FFFFFF]  pl-[101px] pr-[74px] pt-[54px] pb-[65px]">
+    <section
+      className={
+        "w-full bg-[#FFFFFF] py-14 px-[101px] " +
+        "max-[1024px]:px-8 max-[820px]:px-6 max-[650px]:px-4 max-[480px]:px-3 max-[650px]:pb-[0px]"
+      }
+    >
       <div className="max-w-[1140px] mx-auto">
-        {/* Заголовок */}
-        <div className="text-left mb-8">
-          <h2 className="text-5xl font-bold text-[#000000] mx-auto text-center mb-[15px]">
-            Мы ремонтируем и обслуживаем
-            <br />
-            все марки бытовой техники
-          </h2>
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-end justify-between gap-6">
+            <h2
+              className={
+                "text-5xl font-extrabold text-[#0B0B0B] leading-tight text-center" +
+                "max-[1024px]:text-4xl max-[820px]:text-3xl max-[650px]:text-[22px] max-[650px]:text-center w-full text-center"
+              }
+            >
+              Мы ремонтируем и обслуживаем
+              <br />
+              все марки бытовой техники
+            </h2>
+          </div>
+
+          <div className="mt-4 w-28 h-[3px] bg-[#02A653] rounded-full mx-auto"></div>
         </div>
 
-        {/* Сетка логотипов */}
+        {/* Grid */}
         <div
-          className="grid gap-x-8 gap-y-6 justify-center items-center"
-          style={{
-            gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-            alignItems: "center",
-          }}
+          className={
+            "mx-auto grid gap-6 items-center justify-center " +
+            "grid-cols-5 max-[1200px]:grid-cols-4 max-[1024px]:grid-cols-4 max-[820px]:grid-cols-3 max-[480px]:grid-cols-2 max-[360px]:grid-cols-1"
+          }
+          style={{ alignItems: "center" }}
         >
           {logos.map((src, i) => (
             <div
               key={i}
-              className="flex items-center justify-center bg-white rounded-[12px] shadow-[0_6px_20px_rgba(0,0,0,0.06)]"
+              className={
+                "flex items-center justify-center rounded-lg transition-transform duration-200 ease-in-out " +
+                "hover:scale-[1.03] hover:shadow-lg border border-transparent bg-white/0"
+              }
               style={{
-                width: `${cardW}px`,
-                height: `${cardH}px`,
+                // Увеличил размеры карточек и внутренние паддинги
+                minWidth: 160,
+                minHeight: 96,
+                padding: "14px 18px",
               }}
             >
               <img
                 src={src}
                 alt={`logo-${i}`}
-                className="max-w-[88%] max-h-[76%] object-contain"
                 draggable={false}
                 style={{ userSelect: "none" }}
+                className={
+                  // Увеличил высоту логотипов по брейкпоинтам
+                  "h-[56px] max-w-full object-contain " +
+                  "max-[1200px]:h-[52px] " +
+                  "max-[1024px]:h-[50px] " +
+                  "max-[820px]:h-[48px] " +
+                  "max-[650px]:h-[44px] " +
+                  "max-[480px]:h-[40px] " +
+                  "max-[360px]:h-[36px]"
+                }
               />
             </div>
           ))}
         </div>
+
+        <div className="mt-8 text-center opacity-80 text-sm max-[650px]:text-xs">
+          Более 1000 довольных клиентов доверили нам свою технику.
+        </div>
       </div>
 
-      {/* Адаптивные брейкпоинты (Tailwind не всегда позволяет задать точно такую сетку inline -> добавил style jsx) */}
       <style jsx>{`
-        @media (max-width: 1024px) {
-          div[style*="gridTemplateColumns"] {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 18px 16px;
-            justify-items: center;
+        @media (min-width: 1280px) {
+          div[style*="alignItems"] {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 22px;
           }
         }
-        @media (max-width: 820px) {
-          div[style*="gridTemplateColumns"] {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 14px 12px;
+        @media (max-width: 1200px) {
+          div[style*="alignItems"] {
+            gap: 18px;
           }
         }
-        @media (max-width: 480px) {
-          div[style*="gridTemplateColumns"] {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px 10px;
-          }
+        .hover\\:shadow-lg:hover {
+          box-shadow: 0 10px 30px rgba(2, 166, 83, 0.08);
         }
       `}</style>
     </section>

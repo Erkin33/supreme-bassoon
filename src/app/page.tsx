@@ -8,10 +8,10 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="max-w-[1140px] h-full flex flex-col mx-auto pt-[17px] ">
+    <div className="max-w-[1140px] w-full h-full flex flex-col mx-auto pt-[17px] ">
       <Header />
       {/* Обёртка сделана relative + overflow-visible — только это изменено */}
-      <div className="relative overflow-visible bg-[#02A653]">
+      <div className="relative overflow-visible">
         <HeroBanners />
         <Info />
         <GuaranteeSection/>
