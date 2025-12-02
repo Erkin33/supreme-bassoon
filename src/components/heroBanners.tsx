@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
+import { sendPhonePayload } from "@/lib/sendPhone";
 export default function HeroBanners(): React.ReactElement {
   const tabs = ["Электрика", "Сантехника", "Кондиционер"];
   const [activeIndex, setActiveIndex] = useState<number>(2);
@@ -44,12 +44,27 @@ export default function HeroBanners(): React.ReactElement {
     if (!allowed) e.preventDefault();
   }
 
-  function handleSubmit(): void {
-    if (!isValid) return;
-    const normalized = "+998" + digits;
-    console.log("Отправляю номер:", normalized);
-    alert("Отправлено: " + normalized);
+  async function handleSubmit(): Promise<void> {
+  if (!isValid) return;
+  const normalized = "+998" + digits;
+
+  try {
+    // disable UI if нужно (spinner) — здесь простая реализация
+    const res = await sendPhonePayload({ phone: normalized /*, name: optional*/ });
+    const json = await res.json();
+    if (res.ok && json.ok) {
+      alert("Спасибо! Номер отправлен. Ожидайте звонка.");
+      setDigits("");
+    } else {
+      console.error("send failed", json);
+      alert("Ошибка отправки, попробуйте ещё раз.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Ошибка сети. Попробуйте позже.");
   }
+}
+
 
   const phonePlaceholder = "+998 __ ___ __ __";
 

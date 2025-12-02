@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-
+import { sendPhonePayload } from "@/lib/sendPhone";
 const Images = [
   { src: "/Footer/TG.svg", width: "42.23px", height: "42.23px", href: "#" },
   { src: "/Footer/Watsapp.svg", width: "59.44px", height: "61px", href: "#" },
@@ -54,10 +54,27 @@ export default function Footer(): React.ReactElement {
     if (!allowed) e.preventDefault();
   }
 
-  function handleSubmitPhone() {
-    if (!isValid) return;
-    alert("Отправлено: " + formatPhoneUZ(digits));
+  async function handleSubmit(): Promise<void> {
+  if (!isValid) return;
+  const normalized = "+998" + digits;
+
+  try {
+    // disable UI if нужно (spinner) — здесь простая реализация
+    const res = await sendPhonePayload({ phone: normalized /*, name: optional*/ });
+    const json = await res.json();
+    if (res.ok && json.ok) {
+      alert("Спасибо! Номер отправлен. Ожидайте звонка.");
+      setDigits("");
+    } else {
+      console.error("send failed", json);
+      alert("Ошибка отправки, попробуйте ещё раз.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Ошибка сети. Попробуйте позже.");
   }
+}
+
 
   // ------------ YANDEX MAP (Ташкент, Яшнабадский район) ------------
   useEffect(() => {
@@ -265,7 +282,7 @@ export default function Footer(): React.ReactElement {
           {/* BUTTON */}
           <button
             disabled={!isValid}
-            onClick={handleSubmitPhone}
+            onClick={handleSubmit}
             className={
               `w-[326px] h-[58px] text-[#02A653] bg-white rounded-[39px] font-extrabold text-lg flex justify-center items-center ${!isValid ? "opacity-60 cursor-not-allowed" : ""}` +
               // mobile: full width and smaller height
